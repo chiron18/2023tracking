@@ -73,7 +73,7 @@ final_owe = final_owe.drop(['Amount', 'Inverse', 'Inverse Amount'], axis=1)
 page_bg_img = """
 <style>
 [data-testid="block-container"]{
-background-image: url(https://images8.alphacoders.com/561/561681.jpg);
+background-image: url(https://images.unsplash.com/photo-1582002834723-2256d33da100?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80);
 background-size: cover;
 background-position: right left;
 background-attachment: fixed;
