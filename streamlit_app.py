@@ -2,6 +2,8 @@ import pandas as pd
 import streamlit as st
 import numpy as np
 import xlsxwriter
+import openpyxl
+
 
 st.set_page_config(layout="wide")
 
@@ -103,7 +105,7 @@ st.dataframe(final_owe, hide_index=True)
 # Create a download button
 if st.button('Generate Excel File (in memory) - this is a two button process'):
     # Create an Excel writer object
-    excel_writer = pd.ExcelWriter('tempFile.xlsx', engine='xlsxwriter')
+    excel_writer = pd.ExcelWriter('tempFile.xlsx', engine='openpyxl')
     
     # Write each DataFrame to a separate sheet
     expenses_df.to_excel(excel_writer, sheet_name='Expenses', index=False)
@@ -114,6 +116,7 @@ if st.button('Generate Excel File (in memory) - this is a two button process'):
     
     # Save the Excel file
     excel_writer.save()
+    excel_writer.close()
     
     # Provide a link to download the Excel file
     st.download_button(
@@ -123,12 +126,4 @@ if st.button('Generate Excel File (in memory) - this is a two button process'):
         mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )
 
-st.write("")
-st.write("")
-st.write("")
-st.write("working dataframes")
-
-st.write(owes_df)
-st.write(group_owe)
-st.write(expenses_df)
 
