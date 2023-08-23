@@ -1,6 +1,7 @@
 import pandas as pd
 import streamlit as st
 import numpy as np
+from io import BytesIO
 
 st.set_page_config(layout="wide")
 
@@ -27,9 +28,9 @@ input_df['Paid']=input_df['Paid'].round(2)
 payments_df['Amount']=payments_df['Amount'].astype(float)
 
 expenses_df = input_df.copy()
-expenses_df['count'] = expenses_df[['Greg', 'Ian', 'Jerry','Peter','Jason','Brent','Kellen']].sum(axis=1)
-expenses_df['amount'] = expenses_df['Paid']/expenses_df['count'] 
-expenses_df['amount']=expenses_df['amount'].astype(float)
+expenses_df['Split_count'] = expenses_df[['Greg', 'Ian', 'Jerry','Peter','Jason','Brent','Kellen']].sum(axis=1)
+expenses_df['Amount_per_split'] = expenses_df['Paid']/expenses_df['Split_count'] 
+expenses_df['Amount_per_split']=expenses_df['Amount_per_split'].astype(float)
 
 owes_df = pd.DataFrame(columns=['Situation','Amount', 'Item']) # create empty dataframe
 
@@ -80,6 +81,7 @@ background-attachment: fixed;
 }
 </style>
 """
+
 st.markdown(page_bg_img, unsafe_allow_html=True)
 
 st.header('2023 Expense Tracking')
@@ -95,14 +97,43 @@ st.write("Payments Made")
 st.caption('Enter payment details')
 payment_edited_df = st.data_editor(payments_df, num_rows = "dynamic")
 
-
-
-if st.button('Save Changes (manually refresh page to update final tally)'):
-    edited_df.to_csv(EXPENSE_FILE, index=False)
-    payment_edited_df.to_csv(PAYMENT_FILE, index=False)
-
 st.write("Final Tally")
 st.dataframe(final_owe, hide_index=True)
+
+# Create a single button for generating and downloading the Excel file
+if st.button('Generate Excel File (in memory) - this is a two button process'):
+    # Create an in-memory Excel writer
+    excel_buffer = BytesIO()
+    with pd.ExcelWriter(excel_buffer, engine='xlsxwriter') as excel_writer:
+        # Write each DataFrame to a separate sheet
+        expenses_df.to_excel(excel_writer, sheet_name='Expenses', index=False)
+        payments_df.to_excel(excel_writer, sheet_name='Payments', index=False)
+        final_owe.to_excel(excel_writer, sheet_name='Final_Tally', index=False)
+        owes_df.to_excel(excel_writer, sheet_name='Situations', index=False)
+        group_owe.to_excel(excel_writer, sheet_name='Situation_Summary', index=False)
+    
+    # Set the buffer's position to the beginning
+    excel_buffer.seek(0)
+    
+    # Provide a link to download the Excel file
+    st.download_button(
+        label='Click here to download the generated Excel file',
+        data=excel_buffer,
+        file_name='2023_Anzac_Expenses.xlsx',
+        mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    )
+    
+
+
+
+
+
+
+
+
+
+
+
 
 st.write("")
 st.write("")
