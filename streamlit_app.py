@@ -73,7 +73,7 @@ final_owe = final_owe.drop(['Amount', 'Inverse', 'Inverse Amount'], axis=1)
 page_bg_img = """
 <style>
 [data-testid="block-container"]{
-background-image: url(https://www.nps.gov/lacl/learn/nature/images/LACL_2013_BullMooseTelaquana_JMills_1.jpg?maxwidth=1300&maxheight=1300&autorotate=false);
+background-image: url(https://i.natgeofe.com/n/3d7e1e9f-6aed-42e2-82f0-37cf734e536d/2570184_4x3.jpg);
 background-size: cover;
 background-position: right left;
 background-attachment: fixed;
