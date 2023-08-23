@@ -115,7 +115,6 @@ if st.button('Generate Excel File (in memory) - this is a two button process'):
     group_owe.to_excel(excel_writer, sheet_name='Situation_Summary', index=False)
     
     # Save the Excel file
-    excel_writer.save()
     excel_writer.close()
     
     # Provide a link to download the Excel file
