@@ -2,6 +2,7 @@ import pandas as pd
 import streamlit as st
 import numpy as np
 from io import BytesIO
+import xlsxwriter
 
 st.set_page_config(layout="wide")
 
