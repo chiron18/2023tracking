@@ -1,12 +1,6 @@
 import pandas as pd
 import streamlit as st
 import numpy as np
-import io
-
-
-def convert_df(df):
-    # IMPORTANT: Cache the conversion to prevent computation on every rerun
-    return df.to_csv().encode('utf-8')
 
 st.set_page_config(layout="wide")
 
@@ -79,8 +73,7 @@ final_owe = final_owe.drop(['Amount', 'Inverse', 'Inverse Amount'], axis=1)
 page_bg_img = """
 <style>
 [data-testid="block-container"]{
-background-image: url(https://wallpaperset.com/w/full/1/0/d/109733.jpg);
-#background-image: url(https://photos.google.com/photo/AF1QipPm4EuIaf9a7f8JRNlddngTCzqmrp5vrpTXbsbL);
+background-image: url(https://images8.alphacoders.com/561/561681.jpg);
 background-size: cover;
 background-position: right left;
 background-attachment: fixed;
