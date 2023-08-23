@@ -99,6 +99,10 @@ st.write("Payments Made")
 st.caption('Enter payment details')
 payment_edited_df = st.data_editor(payments_df, num_rows = "dynamic")
 
+if st.button('Save Changes (manually refresh page to update final tally)'):
+    edited_df.to_csv(EXPENSE_FILE, index=False)
+    payment_edited_df.to_csv(PAYMENT_FILE, index=False)
+
 st.write("Final Tally")
 st.dataframe(final_owe, hide_index=True)
 
