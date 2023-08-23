@@ -26,9 +26,6 @@ input_df['Paid']=input_df['Paid'].astype(float)
 input_df['Paid']=input_df['Paid'].round(2)
 payments_df['Amount']=payments_df['Amount'].astype(float)
 
-
-st.write(payments_df)
-
 expenses_df = input_df.copy()
 expenses_df['count'] = expenses_df[['Greg', 'Ian', 'Jerry','Peter','Jason','Brent','Kellen']].sum(axis=1)
 expenses_df['amount'] = expenses_df['Paid']/expenses_df['count'] 
