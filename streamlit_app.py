@@ -1,8 +1,8 @@
 import pandas as pd
 import streamlit as st
 import numpy as np
-import xlsxwriter
 import openpyxl
+import datetime  # Import the datetime module
 
 
 st.set_page_config(layout="wide")
@@ -121,7 +121,7 @@ if st.button('Generate Excel File (in memory) - this is a two button process'):
     st.download_button(
         label='Click here to download the generated Excel file',
         data=open('tempFile.xlsx', 'rb'),
-        file_name='2023_Anzac_Expenses.xlsx',
+        file_name=f'2023_Anzac_Expenses_{datetime.datetime.now():%Y-%m-%d_%H-%M-%S}.xlsx',
         mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )
 
