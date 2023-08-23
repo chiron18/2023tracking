@@ -1,7 +1,6 @@
 import pandas as pd
 import streamlit as st
 import numpy as np
-from io import BytesIO
 import xlsxwriter
 
 st.set_page_config(layout="wide")
@@ -101,31 +100,28 @@ payment_edited_df = st.data_editor(payments_df, num_rows = "dynamic")
 st.write("Final Tally")
 st.dataframe(final_owe, hide_index=True)
 
-# Create a single button for generating and downloading the Excel file
+# Create a download button
 if st.button('Generate Excel File (in memory) - this is a two button process'):
-    # Create an in-memory Excel writer
-    excel_buffer = BytesIO()
-    with pd.ExcelWriter(excel_buffer, engine='xlsxwriter') as excel_writer:
-        # Write each DataFrame to a separate sheet
-        expenses_df.to_excel(excel_writer, sheet_name='Expenses', index=False)
-        payments_df.to_excel(excel_writer, sheet_name='Payments', index=False)
-        final_owe.to_excel(excel_writer, sheet_name='Final_Tally', index=False)
-        owes_df.to_excel(excel_writer, sheet_name='Situations', index=False)
-        group_owe.to_excel(excel_writer, sheet_name='Situation_Summary', index=False)
+    # Create an Excel writer object
+    excel_writer = pd.ExcelWriter('2023_Anzac_Expenses.xlsx', engine='xlsxwriter')
     
-    # Set the buffer's position to the beginning
-    excel_buffer.seek(0)
+    # Write each DataFrame to a separate sheet
+    expenses_df.to_excel(excel_writer, sheet_name='Expenses', index=False)
+    payments_df.to_excel(excel_writer, sheet_name='Payments', index=False)
+    final_owe.to_excel(excel_writer, sheet_name='Final_Tally', index=False)
+    owes_df.to_excel(excel_writer, sheet_name='Situations', index=False)
+    group_owe.to_excel(excel_writer, sheet_name='Situation_Summary', index=False)
+    
+    # Save the Excel file
+    excel_writer.save()
     
     # Provide a link to download the Excel file
     st.download_button(
         label='Click here to download the generated Excel file',
-        data=excel_buffer,
+        data=open('2023_Anzac_Expenses.xlsx', 'rb'),
         file_name='2023_Anzac_Expenses.xlsx',
         mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )
-    
-
-
 
 
 
