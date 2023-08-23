@@ -103,7 +103,7 @@ st.dataframe(final_owe, hide_index=True)
 # Create a download button
 if st.button('Generate Excel File (in memory) - this is a two button process'):
     # Create an Excel writer object
-    excel_writer = pd.ExcelWriter('2023_Anzac_Expenses.xlsx', engine='xlsxwriter')
+    excel_writer = pd.ExcelWriter('tempFile.xlsx', engine='xlsxwriter')
     
     # Write each DataFrame to a separate sheet
     expenses_df.to_excel(excel_writer, sheet_name='Expenses', index=False)
@@ -118,19 +118,10 @@ if st.button('Generate Excel File (in memory) - this is a two button process'):
     # Provide a link to download the Excel file
     st.download_button(
         label='Click here to download the generated Excel file',
-        data=open('2023_Anzac_Expenses.xlsx', 'rb'),
+        data=open('tempFile.xlsx', 'rb'),
         file_name='2023_Anzac_Expenses.xlsx',
         mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )
-
-
-
-
-
-
-
-
-
 
 st.write("")
 st.write("")
